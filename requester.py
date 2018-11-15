@@ -24,4 +24,5 @@ class Requester:
             return response_dict['data']
         else:
             error_message = response_dict['status']['error_message']
-            raise Exception(error_message)
+            raise Exception(
+                str(response.status_code) + ': ' + error_message)
