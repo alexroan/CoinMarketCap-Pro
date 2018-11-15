@@ -22,26 +22,33 @@ class EndpointType:
 class Cryptocurrency(EndpointType):
     __ENDPOINT = '/v1/cryptocurrency'
 
+    def __init__(self, requester):
+        EndpointType.__init__(self, requester=requester)
+        self.listings = Listings(requester=self.requester, base_endpoint=self.__ENDPOINT)
+
+    # /info endpoint.
     def info(self, id=None, symbol=None):
         if id == None and symbol == None:
             raise Exception('Needs at least one of id or symbol')
+        if id != None and symbol != None:
+            raise Exception('Either id or symbol, not both')
 
-        params = ''
-        if id != None:
-            params = self.construct_params('id', id)
-        elif symbol != None:
-            params = self.construct_params('symbol', symbol)
+        params = self.construct_params('id', id) if id != None else None
+        if params == None:
+            params = self.construct_params('symbol', symbol) if symbol != None else None
 
         endpoint = self.__ENDPOINT + '/info'
         return self.requester.request(endpoint, params)
 
-    def map(self):
-        # TODO
-        return
+    # /map endpoint
+    def map(self, listing_status=None, start=None, limit=None, symbol=None):
+        params = self.construct_params('listing_status', listing_status) if listing_status != None else ''
+        params += '&' + self.construct_params('start', start) if start != None else ''
+        params += '&' + self.construct_params('limit', limit) if limit != None else ''
+        params += '&' + self.construct_params('symbol', symbol) if symbol != None else ''
 
-    def listings(self):
-        # TODO
-        return
+        endpoint = self.__ENDPOINT + '/map'
+        return self.requester.request(endpoint, params)
 
     def market_pairs(self):
         # TODO
@@ -91,3 +98,32 @@ class Tools:
     def price_convertion(self):
         # TODO
         return
+
+class Listings(EndpointType):
+
+    def __init__(self, requester, base_endpoint):
+        EndpointType.__init__(self, requester)
+        self.endpoint = base_endpoint + '/listings'
+
+    def latest(self, start=None, limit=None, convert=None, sort=None,
+        sort_dir=None, cryptocurrency_type=None, symbol=None, id=None,
+        market_type=None, slug=None):
+        params = self.construct_params('start', start) if start != None else ''
+        params += '&' + self.construct_params('limit', limit) if limit != None else ''
+        params += '&' + self.construct_params('convert', convert) if convert != None else ''
+        params += '&' + self.construct_params('sort', sort) if sort != None else ''
+        params += '&' + self.construct_params('sort_dir', sort_dir) if sort_dir != None else ''
+        params += '&' + self.construct_params('cryptocurrency_type', cryptocurrency_type) if cryptocurrency_type != None else ''
+        params += '&' + self.construct_params('symbol', symbol) if symbol != None else ''
+        params += '&' + self.construct_params('id', id) if id != None else ''
+        params += '&' + self.construct_params('market_type', market_type) if market_type != None else ''
+        params += '&' + self.construct_params('slug', slug) if slug != None else ''
+
+        endpoint = self.endpoint + '/latest'
+        return self.requester.request(endpoint, params)
+
+    def historical(self):
+        # TODO
+        params = ''
+        endpoint = self.endpoint + '/historical'
+        return self.requester.request(endpoint, params)
