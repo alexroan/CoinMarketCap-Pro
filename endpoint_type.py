@@ -35,11 +35,59 @@ class Cryptocurrency(EndpointType):
         endpoint = self.__ENDPOINT + '/info'
         return self.requester.request(endpoint, params)
 
+    def map(self):
+        # TODO
+        return
+
+    def listings(self):
+        # TODO
+        return
+
+    def market_pairs(self):
+        # TODO
+        return
+
+    def ohlcv(self):
+        # TODO
+        return
+
+    def quotes(self):
+        # TODO
+        return
+
 class Exchange:
     __ENDPOINT = '/v1/exchange'
+
+    def info(self):
+        # TODO
+        return
+
+    def map(self):
+        # TODO
+        return
+
+    def listings(self):
+        # TODO
+        return
+
+    def market_pairs(self):
+        # TODO
+        return
+
+    def quotes(self):
+        # TODO
+        return
 
 class GlobalMetrics:
     __ENDPOINT = '/v1/global-metrics'
 
+    def quotes(self):
+        # TODO
+        return
+
 class Tools:
     __ENDPOINT = '/v1/tools'
+
+    def price_convertion(self):
+        # TODO
+        return
