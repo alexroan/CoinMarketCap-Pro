@@ -1,6 +1,6 @@
 Example usage:
 
-```
+```python
 
 from coin_market_cap import CoinMarketCap, ApiUrl
 
