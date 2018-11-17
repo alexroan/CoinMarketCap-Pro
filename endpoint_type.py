@@ -105,25 +105,28 @@ class Listings(EndpointType):
         EndpointType.__init__(self, requester)
         self.endpoint = base_endpoint + '/listings'
 
-    def latest(self, start=None, limit=None, convert=None, sort=None,
-        sort_dir=None, cryptocurrency_type=None, symbol=None, id=None,
-        market_type=None, slug=None):
+    def construct_multiple_params(self, start=None, limit=None, convert=None, sort=None,
+        sort_dir=None, cryptocurrency_type=None):
         params = self.construct_params('start', start) if start != None else ''
         params += '&' + self.construct_params('limit', limit) if limit != None else ''
         params += '&' + self.construct_params('convert', convert) if convert != None else ''
         params += '&' + self.construct_params('sort', sort) if sort != None else ''
         params += '&' + self.construct_params('sort_dir', sort_dir) if sort_dir != None else ''
         params += '&' + self.construct_params('cryptocurrency_type', cryptocurrency_type) if cryptocurrency_type != None else ''
-        params += '&' + self.construct_params('symbol', symbol) if symbol != None else ''
-        params += '&' + self.construct_params('id', id) if id != None else ''
-        params += '&' + self.construct_params('market_type', market_type) if market_type != None else ''
-        params += '&' + self.construct_params('slug', slug) if slug != None else ''
+        return params
 
+    # get latest listings
+    def latest(self, start=None, limit=None, convert=None, sort=None,
+        sort_dir=None, cryptocurrency_type=None):
+        params = self.construct_multiple_params(start=start, limit=limit, convert=convert,
+            sort=sort, sort_dir=sort_dir, cryptocurrency_type=cryptocurrency_type)
         endpoint = self.endpoint + '/latest'
         return self.requester.request(endpoint, params)
 
-    def historical(self):
-        # TODO
-        params = ''
+    # get historical listings
+    def historical(self, timestamp=None, start=None, limit=None, convert=None,
+        sort=None, sort_dir=None, cryptocurrency_type=None):
+        params = self.construct_multiple_params(start=start, limit=limit, convert=convert,
+            sort=sort, sort_dir=sort_dir, cryptocurrency_type=cryptocurrency_type)
         endpoint = self.endpoint + '/historical'
         return self.requester.request(endpoint, params)
