@@ -55,8 +55,14 @@ class Cryptocurrency(EndpointType):
         return self.requester.request(endpoint, params)
 
 
-class Exchange:
+class Exchange(EndpointType):
     __ENDPOINT = '/v1/exchange'
+
+    def __init__(self, requester):
+        EndpointType.__init__(self, requester=requester)
+        self.listings = Listings(requester=self.requester, base_endpoint=self.__ENDPOINT)
+        self.market_pairs = MarketPairs(requester=self.requester, base_endpoint=self.__ENDPOINT)
+        self.quotes = Quotes(requester=self.requester, base_endpoint=self.__ENDPOINT)
 
     def info(self):
         # TODO
@@ -66,17 +72,6 @@ class Exchange:
         # TODO
         return
 
-    def listings(self):
-        # TODO
-        return
-
-    def market_pairs(self):
-        # TODO
-        return
-
-    def quotes(self):
-        # TODO
-        return
 
 class GlobalMetrics:
     __ENDPOINT = '/v1/global-metrics'
@@ -85,12 +80,15 @@ class GlobalMetrics:
         # TODO
         return
 
+
 class Tools:
     __ENDPOINT = '/v1/tools'
 
     def price_convertion(self):
         # TODO
         return
+
+
 
 class Quotes(EndpointType):
 

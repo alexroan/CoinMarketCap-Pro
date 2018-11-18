@@ -1,4 +1,4 @@
-from endpoint_type import Cryptocurrency
+from endpoint_type import Cryptocurrency, Exchange
 from requester import Requester
 
 class ApiUrl:
@@ -11,5 +11,5 @@ class CoinMarketCap:
         self.requester = Requester(
             base_url=url, 
             api_key=api_key)
-        self.cryptocurrency = Cryptocurrency(
-            requester=self.requester)
+        self.cryptocurrency = Cryptocurrency(requester=self.requester)
+        self.exchange = Exchange(requester=self.requester)
