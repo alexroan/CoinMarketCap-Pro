@@ -8,8 +8,6 @@ class ApiUrl:
 class CoinMarketCap:
     
     def __init__(self, url, api_key):
-        self.requester = Requester(
-            base_url=url, 
-            api_key=api_key)
-        self.cryptocurrency = Cryptocurrency(requester=self.requester)
-        self.exchange = Exchange(requester=self.requester)
+        requester = Requester(base_url=url, api_key=api_key)
+        self.cryptocurrency = Cryptocurrency(requester=requester)
+        self.exchange = Exchange(requester=requester)
