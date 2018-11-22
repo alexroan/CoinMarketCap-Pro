@@ -1,5 +1,5 @@
-from endpoint_type import Cryptocurrency, Exchange, GlobalMetrics, Tools
-from requester import Requester
+from .endpoint_type import Cryptocurrency, Exchange, GlobalMetrics, Tools
+from .requester import Requester
 
 class ApiUrl:
     BASE_URL = 'https://pro-api.coinmarketcap.com'
