@@ -8,7 +8,7 @@ You can also use the [Sandbox API](https://sandbox.coinmarketcap.com) to develop
 
 ```python
 
-from coin_market_cap import CoinMarketCap, ApiUrl
+from coinmarketcap_pro import CoinMarketCap, ApiUrl
 
 # Use the SANDBOX_URL for the sandbox, or BASE_URL for the pro API
 # Use your api key
